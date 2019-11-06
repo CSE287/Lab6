@@ -1,5 +1,5 @@
-#include <GL/gl.h>
 #include <GL/freeglut.h>   // freeglut.h might be a better alternative, if available.
+#include <GL/gl.h>
 #include <cstdio>
 #include <vector>
 #include <algorithm>
@@ -18,7 +18,7 @@ static Image screenshot() {
     glReadPixels(0, 0, width, height, GL_RGB, GL_FLOAT, (float*)&pixels[0]);
 
     Image image(width, height);
-    for (int i = 0; i < height; ++i){
+    for (unsigned int i = 0; i < height; ++i){
         std::copy_n(&pixels[i*width*3], width*3, (double*)image[height-i-1]);
     }
     return image;
@@ -347,7 +347,7 @@ int main(int argc, char** argv)
 
 
     // Set red, green, blue, and alpha to which the color buffer is cleared.
-    glClearColor(0.784, 0.784, 1.0, 1.0);
+    glClearColor(0.784f, 0.784f, 1.0f, 1.0f);
 
     // Request that the window be made full screen
 //    glutFullScreen( );

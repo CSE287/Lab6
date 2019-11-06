@@ -1,9 +1,6 @@
-//
-// Created by femianjc on 9/23/19.
-//
-
 #ifndef F_RAY_TRACE_PNM_HPP
 #define F_RAY_TRACE_PNM_HPP
+
 
 #include <numeric>
 #include <cstdio>
@@ -29,7 +26,7 @@ inline void save_ppm(char const* fname, T const *buf, int w, int h){
     for (int i = 0; i < h; ++i){
         for (int j = 0; j < w; ++j) {
             for (int k = 0; k < 3; ++k){
-                float v = *buf;
+                double v = *buf;
                 fputc(clip(int(v * 255)), fp);
                 ++buf;
             }
@@ -48,8 +45,8 @@ struct Image{
 public:
     typedef glm::dvec3 Pixel;
 private:
-    int w;
-    int h;
+    unsigned int w;
+    unsigned int h;
     std::valarray<Pixel> pix;
 public:
     int width() const {return w;}
@@ -67,8 +64,8 @@ public:
     bool compare(Image const& o, double atol=1/510.) const {
         if (w != o.w || h != o.h) { return false;}
 
-        for (int i = 0; i < h; ++i){
-            for (int j = 0; j < w; ++j){
+        for (unsigned int i = 0; i < h; ++i){
+            for (unsigned int j = 0; j < w; ++j){
                 for (int k = 0; k < 3; ++k) {
                     if (abs((*this)[i][j][k] - o[i][j][k]) > atol) {
                         return false;
@@ -88,8 +85,8 @@ public:
         fscanf(fp, "P6\n%d\n%d\n%d\n", &w, &h, &cmax);
         pix.resize(w*h);
         auto p = begin();
-        for (int i = 0; i < h; ++i){
-            for (int j = 0; j < w; ++j) {
+        for (unsigned int i = 0; i < h; ++i){
+            for (unsigned int j = 0; j < w; ++j) {
                 p->r = fgetc(fp)/255.;
                 p->g = fgetc(fp)/255.;
                 p->b = fgetc(fp)/255.;
